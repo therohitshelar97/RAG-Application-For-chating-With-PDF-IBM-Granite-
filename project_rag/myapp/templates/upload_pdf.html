@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    input[type="file"] {
+        transform: scale(1.6); /* Scale by 1.5 times */
+        transform-origin: left;
+        }
+
+    .box{
+        position: absolute;
+        left: 28%;
+        top: 30%; 
+        background-color: rgb(172, 116, 224);
+        padding: 50px;
+        border-radius: 30px;
+       
+        
+    }
+    label{
+        font-size: 30px;
+    }
+
+    @media screen and (max-width:700px) {
+        .box{
+        position: static;
+       
+        background-color: rgb(172, 116, 224);
+        padding: 50px;
+       
+        
+    }
+    }
+
+</style>
+
+<div class="box">
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="pdf">Upload-PDF : </label>
+            <input type="file" id="pdf" value="Upload-PDF" accept="" onchange="this.form.submit()" name="pdf" />
+             <br><br>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
