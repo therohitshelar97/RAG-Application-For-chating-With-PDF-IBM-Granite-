@@ -19,6 +19,9 @@ from langchain.chains import RetrievalQA
 
 def Index(request):
     try:
+        data = Store_pdf.objects.all().values_list()
+        file_path=f'media/{data[len(data)-1][1]}'
+        print(file_path)
         response = "Ask Me Something From Your Uploaded PDF"
         if request.method == "POST":
             query = request.POST.get("query")
@@ -26,13 +29,13 @@ def Index(request):
             response = "Wait For It Loading"
             # Store_pdf.objects.create(uploaded_file=pdf)
             data = Store_pdf.objects.all().values_list()
-            file_path=f'media\{data[len(data)-1][1]}'
+            file_path=f'media/{data[len(data)-1][1]}'
             print(file_path)
             credentials = Credentials(
                 url="https://us-south.ml.cloud.ibm.com",
-                api_key="zo8wTrtknCVmEnsOrflHvwESIXL7-Jiezx4lK4DfHBQc",
+                api_key="2WnQDeUOL_P4D3Hc6oOmT5o3yXubHzTtQh1qyJnqk_31",
             )
-            project_id = os.environ.get("PROJECT_ID", "2a361427-8eae-4c41-883f-9e1fa058ecbb")
+            project_id = os.environ.get("PROJECT_ID", "dbc08080-24a7-454f-9dcb-eaaf7c9623c8")
         
             # Initialize API client
             api_client = APIClient(credentials=credentials, project_id=project_id)
@@ -111,7 +114,7 @@ def Index(request):
             response = qa.invoke(query)
             response = response['result']
             print(f"Answer: {response}")
-        return render(request,'index.html',{'data':response})
+        return render(request,'index.html',{'data':response,'file':file_path})
     except:
         error = "Error Might Token Quota Reached, Request of 1 token(s) from quota was rejected"
         return render(request,'index.html',{'data':error})
